@@ -1077,6 +1077,7 @@ function submitEnquiryForm() {
     email: emailInput ? emailInput.value.trim() : '',
     source: 'contact-form'
   }).finally(function () {
+    unlockFloorPlans();
     const ef = document.getElementById('ef');
     const efActs = document.getElementById('ef-acts');
     const formOk = document.getElementById('form-ok');
@@ -1117,6 +1118,7 @@ function submitStickyPanel() {
     email: '',
     source: 'sticky-right-panel'
   }).finally(function () {
+    unlockFloorPlans();
     const fields = document.getElementById('sr-fields');
     const ok = document.getElementById('sr-ok');
     if (fields) fields.style.display = 'none';
@@ -1155,6 +1157,7 @@ function submitScrollPopup() {
     email: '',
     source: 'scroll-popup'
   }).finally(function () {
+    unlockFloorPlans();
     const fields = document.getElementById('sp-fields');
     const ok = document.getElementById('sp-ok');
     if (fields) fields.style.display = 'none';
@@ -1268,6 +1271,30 @@ window.openFpPopup = function (bhkLabel) {
   } else {
     setTimeout(init, 50);
   }
+})();
+// ── FLOOR PLAN UNLOCK ──
+function unlockFloorPlans() {
+  document.querySelectorAll('.fp-image-wrap').forEach(function(wrap) {
+    // Unblur the image
+    const img = wrap.querySelector('img');
+    if (img) {
+      img.style.filter = 'none';
+      img.style.opacity = '1';
+    }
+    // Hide the lock overlay
+    const overlay = wrap.querySelector('.fp-lock-overlay');
+    if (overlay) overlay.style.display = 'none';
+    // Remove click handler that re-opens popup
+    wrap.style.cursor = 'default';
+    wrap.onclick = null;
+  });
+  // Store in sessionStorage so it persists on scroll
+  sessionStorage.setItem('fp_unlocked', '1');
+}
+
+// Auto-unlock on page load if already submitted this session
+(function() {
+  if (sessionStorage.getItem('fp_unlocked') === '1') unlockFloorPlans();
 })();
 </script>
 </body>
