@@ -2978,3 +2978,35 @@ footer {
     aspect-ratio: 4 / 5;
   }
 }
+@media (max-width: 600px) {
+  .hero-stats {
+    flex-wrap: wrap;
+  }
+
+  .hstat {
+    flex: 0 0 33.33%; /* 3 items on first row */
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 0.4rem;
+  }
+
+  /* last 2 items — center them on second row */
+  .hstat:nth-child(4),
+  .hstat:nth-child(5) {
+    flex: 0 0 50%;
+  }
+
+  /* clean up right borders on row ends */
+  .hstat:nth-child(3),
+  .hstat:nth-child(5) {
+    border-right: none;
+  }
+
+  .hstat-v {
+    font-size: 1.2rem;
+  }
+
+  .hstat-l {
+    font-size: 0.55rem;
+  }
+}
