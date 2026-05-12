@@ -2929,7 +2929,7 @@ footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
-  align-items: start;
+  align-items: stretch; /* both columns same height */
 }
 
 .promo-banner-item {
@@ -2937,15 +2937,24 @@ footer {
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(26, 107, 60, 0.12);
   border: 1.5px solid var(--border);
-  background: #000;
-  line-height: 0; /* removes bottom gap under img */
+  background: #0b2e18;
+  height: 600px; /* fixed height — both cards identical */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .promo-banner-item img {
   width: 100%;
-  height: auto;        /* full image, no crop */
+  height: 100%;
   display: block;
-  object-fit: contain; /* never cuts off any part */
+  object-fit: contain; /* shows full image, no cropping */
+}
+
+@media (max-width: 1100px) {
+  .promo-banner-item {
+    height: 480px;
+  }
 }
 
 @media (max-width: 900px) {
@@ -2954,7 +2963,18 @@ footer {
   }
 
   .promo-banners-grid {
-    grid-template-columns: 1fr; /* stack on mobile */
+    grid-template-columns: 1fr;
     gap: 1.2rem;
+  }
+
+  .promo-banner-item {
+    height: auto;        /* on mobile let them stack naturally */
+    aspect-ratio: 3 / 4; /* tall card fits portrait image nicely */
+  }
+}
+
+@media (max-width: 600px) {
+  .promo-banner-item {
+    aspect-ratio: 4 / 5;
   }
 }
